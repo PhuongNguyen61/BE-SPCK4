@@ -91,6 +91,7 @@ const UserController = {
       delete getUser.salt;
       delete getUser.password;
       const accessToken = jwt.sign(getUser, SECRET_KEY, {
+        // expiresIn: 10,
         expiresIn: 60 * 60 * 24,
       });
       const refreshToken = jwt.sign(getUser, SECRET_KEY, {
@@ -112,6 +113,22 @@ const UserController = {
       });
     }
   },
+  // Lấy thông tin người dùng theo id
+  getUser: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const user = await UserModel.findById(id, '-password -salt');
+      res.status(200).send({
+        message: "Lấy thông tin người dùng thành công!",
+        data: user,
+      });
+    } catch (error) {
+      res.status(500).send({
+        message: error.message,
+        data: null,
+      });
+    }
+  },
   // Đếm tất cả người dùng theo vai trò
   countUsers: async (req, res) => {
     try {
@@ -127,10 +144,10 @@ const UserController = {
             customer: customer.length,
         });
     } catch (error) {
-        res.status(500).send({
-            message: error.message,
-            data: null,
-        });
+      res.status(500).send({
+        message: error.message,
+        data: null,
+      });
     }
   },
   // Lấy tất cả người dùng theo vai trò
@@ -168,22 +185,6 @@ const UserController = {
             totalPages: Math.ceil(totalUsers.length / dataLimit),
         });
       }
-    } catch (error) {
-      res.status(500).send({
-        message: error.message,
-        data: null,
-      });
-    }
-  },
-  // Lấy thông tin người dùng theo id
-  getUser: async (req, res) => {
-    try {
-      const { id } = req.params;
-      const user = await UserModel.findById(id, '-password -salt');
-      res.status(200).send({
-        message: "Successful",
-        data: user,
-      });
     } catch (error) {
       res.status(500).send({
         message: error.message,

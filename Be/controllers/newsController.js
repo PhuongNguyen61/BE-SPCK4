@@ -333,7 +333,7 @@ const newsController = {
             const {id} = req.params;
             const findByIdAndDelete = await NewsModel.findByIdAndDelete(id)
             res.status(200).send({
-                message: 'Xóa tin thành công!',
+                message: 'Xóa tin tức thành công!',
             });
         } catch (error) {
             res.status(500).send({
