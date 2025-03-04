@@ -41,10 +41,10 @@ const carSchema = new mongoose.Schema({
   isStatus: {
     type: String,
     enum: ["approved", "pending"],
-    default: "pending"
-},
+    default: "pending",
+  },
 });
-
+carSchema.index({ createdAt: -1 });
 const CarModel = mongoose.model("cars", carSchema);
 
 export default CarModel;

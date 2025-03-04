@@ -22,10 +22,21 @@ const MailController = {
   sendMail: async (req, res) => {
     try {
       console.log("Request body:", req.body);
+      // Kiểm tra request body có dữ liệu không
+      if (!req.body || Object.keys(req.body).length === 0) {
+        throw new Error("Dữ liệu yêu cầu không hợp lệ.");
+      }
       const { senderName, senderEmail, senderPhone, mailContent } = req.body;
       const { senderId, recipientId, carId } = req.query;
-      if (!senderName || !senderEmail || !senderPhone) {
-        return res.status(400).json({ message: "Thiếu thông tin bắt buộc" });
+      if (
+        !senderName?.trim() ||
+        senderName === "null" ||
+        !senderEmail?.trim() ||
+        senderEmail === "null" ||
+        !senderPhone?.trim() ||
+        senderPhone === "null"
+      ) {
+        throw new Error("Thiếu thông tin bắt buộc");
       }
       const checkMailExist = await MailModel.findOne({ senderId, carId });
       if (checkMailExist) throw new Error("Bạn đã hỏi về xe này rồi");
@@ -68,6 +79,7 @@ const MailController = {
       // const skip = (pageNumber - 1) * dataLimit;
       const { userId } = req.query;
       const mails = await MailModel.find({ senderId: userId })
+        .sort({ createdAt: -1 })
         .populate("recipientId  senderId")
         .populate("carId", "carName");
       // .skip(skip);
@@ -97,6 +109,7 @@ const MailController = {
       // const skip = (pageNumber - 1) * dataLimit;
       const { providerId } = req.query;
       const mails = await MailModel.find({ recipientId: providerId })
+        .sort({ createdAt: -1 })
         .populate("recipientId senderId")
         .populate("carId", "carName");
       // .skip(skip)
@@ -205,14 +218,14 @@ const MailController = {
       const mail = await MailModel.findById(id);
       if (!mail) return res.status(404).json({ message: "Thư không tồn tại!" });
 
-      if (!["từ chối", "hết hạn"].includes(mail.status)) {
-        return res.status(400).json({
-          message: "Không thể xóa thư khi chưa từ chối hoặc hết hạn!",
-        });
-      }
+      // if (!["từ chối", "chấp thuận"].includes(mail.status)) {
+      //   return res.status(400).json({
+      //     message: "Không thể xóa thư khi chưa từ chối hoặc chấp thuận!",
+      //   });
+      // }
 
       await MailModel.findByIdAndDelete(id);
-      return res.json({ message: "Xóa thư thành công!" });
+      return res.json({ message: "Xóa thư thành công!", data: mail });
     } catch (error) {
       console.error(error);
       return res.status(500).json({ message: "Lỗi server!" });

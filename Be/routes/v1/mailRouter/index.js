@@ -18,5 +18,6 @@ MailRouter.get("/SenderMail", MailController.getSenderMail);
 MailRouter.put("/:id/status", MailController.changeMailStatus);
 //Đánh dầu là đã đọc
 MailRouter.put("/:id/read", MailController.readMail);
-
+//hàm xóa thư
+MailRouter.delete("/deleteMail/:id", MailController.deleteMail);
 export default MailRouter;
