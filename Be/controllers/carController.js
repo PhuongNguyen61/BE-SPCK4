@@ -276,7 +276,7 @@ const CarController = {
         });
         //xóa phần img với name ở 2 dòng trên
         res.status(201).send({
-          message: "Thay đổi thông tin xe thành công!",
+          message: "Cập nhật thông tin xe thành công!",
           data: updatedCar,
         });
       } catch (error) {

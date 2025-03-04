@@ -10,11 +10,13 @@ CarRouter.post(
   UserMiddleware.checkRoleProvider,
   CarController.createCar
 );
-// tìm xe qua id
+// Tìm xe theo Id - ALL
 CarRouter.get("/car/:idCar", CarController.getCarById);
-// tìm xe (có query)
+// Tìm xe (có query) - ALL
 CarRouter.get("", CarController.getListCar);
+//
 // CarRouter.put("/addColor", CarController.updateCarColors);
+// Tìm xe theo Brand - ALL
 CarRouter.get("/brand", CarController.findCarsByBrand);
 // Tìm kiếm xe theo tên - ALL
 CarRouter.get("/search", CarController.searchingCar);
