@@ -73,12 +73,12 @@ const UserMiddleware = {
   },
 
   modifyUser: async (req, res, next) => {
-    const accessToken = req.headers.authorization.split(' ')[1];
-    console.log(accessToken);
+    const accessToken = req.headers.authorization.split(" ")[1];
+    // console.log(accessToken);
     if (!accessToken) {
       res.status(400).send({
-        message: 'Permisson denined!',
-        data: null
+        message: "Permisson denined!",
+        data: null,
       });
     } else {
       // jwt.verify(accessToken, SECRET_KEY, (err, decoded) => {
@@ -91,15 +91,14 @@ const UserMiddleware = {
       //         req.user = decoded;
       //         return next();
       //     }
-      // }); 
+      // });
       const decoded = jwt.verify(accessToken, SECRET_KEY);
       req.user = {
-        _id: decoded._id
-      }
-      next()
+        _id: decoded._id,
+      };
+      next();
     }
   },
-
 
   ////////
   checkProviderOrAdmin: async (req, res, next) => {
@@ -112,7 +111,7 @@ const UserMiddleware = {
 
       if (role === "ADMIN" || role === "PROVIDER")
         req.user = {
-          idUser: decoded._id
+          idUser: decoded._id,
         }; //truyền id của người dùng (có api sẽ cần)
       console.log(req);
       next();
@@ -123,7 +122,6 @@ const UserMiddleware = {
       });
     }
   },
-
 };
 
 export default UserMiddleware;

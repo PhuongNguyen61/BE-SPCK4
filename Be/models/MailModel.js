@@ -57,6 +57,7 @@ const mailSchema = new mongoose.Schema(
 // Tối ưu truy vấn index
 mailSchema.index({ recipientId: 1, status: 1, createdAt: -1 }); //1: Index cho việc lấy thư từ id người nhận
 mailSchema.index({ senderId: 1, carId: 1 }); //2
+mailSchema.index({ senderId: 1, createdAt: -1 }); //2
 mailSchema.index({ createdAt: -1 }); //3: Index cho việc lấy thời gian mới nhất
 
 const MailModel = mongoose.model("mails", mailSchema);
