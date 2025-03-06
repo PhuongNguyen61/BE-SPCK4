@@ -298,7 +298,10 @@ const UserController = {
       const application = await ApplicationModel.create({
         userId: id,
       });
-      io.to("admin-room").emit("register-provider", {
+      // io.to("admin-room").emit("register-provider", {
+      //   message: `Có người đăng ký làm provider`,
+      // });
+      io.to("67743d92d77271d4f50a0c1a").emit("register-provider", {
         message: `Có người đăng ký làm provider`,
       });
       res.status(200).send({
