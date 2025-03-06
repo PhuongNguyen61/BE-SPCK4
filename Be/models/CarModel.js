@@ -38,13 +38,14 @@ const carSchema = new mongoose.Schema({
     required: true,
   },
   createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now },
   isStatus: {
     type: String,
     enum: ["approved", "pending"],
     default: "pending",
   },
 });
-carSchema.index({ createdAt: -1 });
+carSchema.index({ updatedAt: -1 });
 const CarModel = mongoose.model("cars", carSchema);
 
 export default CarModel;
