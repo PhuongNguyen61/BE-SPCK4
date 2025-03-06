@@ -21,13 +21,16 @@ const MailController = {
   //Api gửi thư
   sendMail: async (req, res) => {
     try {
-      // console.log("Request body:", req.body);
+      console.log("Request body:", req.body);
       // Kiểm tra request body có dữ liệu không
       if (!req.body || Object.keys(req.body).length === 0) {
         throw new Error("Dữ liệu yêu cầu không hợp lệ.");
       }
       const { senderName, senderEmail, senderPhone, mailContent } = req.body;
       const { senderId, recipientId, carId } = req.query;
+      const role = req.user.role;
+      if (role === "ADMIN")
+        throw new Error("Vui lòng không sử dụng tài khoản Admin để gửi đơn");
       if (
         !senderName?.trim() ||
         senderName === "null" ||
@@ -234,3 +237,12 @@ const MailController = {
 };
 
 export default MailController;
+
+/*
+A: web gửi đơn
+B: web trả lời
+
+
+
+
+*/

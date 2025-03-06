@@ -81,24 +81,16 @@ const UserMiddleware = {
         data: null,
       });
     } else {
-      // jwt.verify(accessToken, SECRET_KEY, (err, decoded) => {
-      //     if (err) {
-      //         res.status(401).send({
-      //             message: err.message,
-      //             data: null
-      //         });
-      //     } else {
-      //         req.user = decoded;
-      //         return next();
-      //     }
-      // });
       const decoded = jwt.verify(accessToken, SECRET_KEY);
+      console.log(decoded.role);
+
       req.user = {
         _id: decoded._id,
+        role: decoded.role,
       };
       next();
     }
-  },
+  }, //middleware check token
 
   ////////
   checkProviderOrAdmin: async (req, res, next) => {
