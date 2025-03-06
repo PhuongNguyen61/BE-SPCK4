@@ -40,5 +40,5 @@ UserRouter.post(
   middlewares.verifyAccessToken,
   middlewares.validateAdminOrAccountOwner,
   UserController.registerProvider
-); //Đăng ký làm provider. Chờ admin duyệt
+); // Đăng ký làm provider. Chờ admin duyệt
 export default UserRouter;
