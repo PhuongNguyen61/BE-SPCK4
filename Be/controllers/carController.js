@@ -107,7 +107,7 @@ const CarController = {
       const pageNumber = parseInt(page) || 1;
       const skip = (pageNumber - 1) * dataLimit;
       // console.log("Min Price:", minPrice, "Max Price:", maxPrice);
-      const filters = {};
+      const filters = {isStatus: 'approved'};
       if (brand) filters.brand = { $regex: brand, $options: "i" }; //áp các điều kiện vô filter - k phân biệt hoa thường
       if (state) filters.state = state;
       if (color) filters.color = color;
@@ -118,7 +118,7 @@ const CarController = {
       const listCar = await CarModel.find(filters)
         .skip(skip)
         .limit(dataLimit)
-        .sort({ createdAt: -1 }); //find({color : color})
+        .sort({ updatedAt: -1 }); //find({color : color})
       const totalCars = await CarModel.countDocuments(filters); //Đếm những phần tử thỏa mãn đk
       res.status(200).send({
         message: "Successful",
@@ -322,9 +322,9 @@ const CarController = {
       const changeStatusCar = await CarModel.findByIdAndUpdate(
         {
           _id: id,
-        },
-        {
+        },{
           isStatus: newStatus,
+          updatedAt: new Date(),
         }
       );
       if (newStatus === "approved") {
@@ -374,11 +374,11 @@ const CarController = {
       if (isStatus === "all") {
         const totalCars = await CarModel.find(
           {},
-          "carName brand state isStatus createdAt"
+          "carName brand state isStatus updatedAt"
         );
         const result = await CarModel.find(
           {},
-          "carName brand state isStatus createdAt"
+          "carName brand state isStatus updatedAt"
         )
           .skip(skip)
           .limit(dataLimit)
@@ -394,13 +394,13 @@ const CarController = {
           {
             isStatus: isStatus,
           },
-          "carName brand state isStatus createdAt"
+          "carName brand state isStatus updatedAt"
         );
         const result = await CarModel.find(
           {
             isStatus: isStatus,
           },
-          "carName brand state isStatus createdAt"
+          "carName brand state isStatus updatedAt"
         )
           .skip(skip)
           .limit(dataLimit)
@@ -459,13 +459,13 @@ const CarController = {
           {
             brand: brand,
           },
-          "carName brand state isStatus createdAt"
+          "carName brand state isStatus updatedAt"
         );
         const result = await CarModel.find(
           {
             brand: brand,
           },
-          "carName brand state isStatus createdAt"
+          "carName brand state isStatus updatedAt"
         )
           .skip(skip)
           .limit(dataLimit)
@@ -482,14 +482,14 @@ const CarController = {
             brand: brand,
             isStatus: isStatus,
           },
-          "carName brand state isStatus createdAt"
+          "carName brand state isStatus updatedAt"
         );
         const result = await CarModel.find(
           {
             brand: brand,
             isStatus: isStatus,
           },
-          "carName brand state isStatus createdAt"
+          "carName brand state isStatus updatedAt"
         )
           .skip(skip)
           .limit(dataLimit)
@@ -549,13 +549,13 @@ const CarController = {
           {
             idProvider: idProvider,
           },
-          "carName brand state isStatus createdAt"
+          "carName brand state isStatus updatedAt"
         );
         const result = await CarModel.find(
           {
             idProvider: idProvider,
           },
-          "carName brand state isStatus createdAt"
+          "carName brand state isStatus updatedAt"
         )
           .skip(skip)
           .limit(dataLimit)
@@ -573,14 +573,14 @@ const CarController = {
             idProvider: idProvider,
             isStatus: isStatus,
           },
-          "carName brand state isStatus createdAt"
+          "carName brand state isStatus updatedAt"
         );
         const result = await CarModel.find(
           {
             idProvider: idProvider,
             isStatus: isStatus,
           },
-          "carName brand state isStatus createdAt"
+          "carName brand state isStatus updatedAt"
         )
           .skip(skip)
           .limit(dataLimit)
@@ -663,13 +663,13 @@ const CarController = {
           {
             state: getStateName(state),
           },
-          "carName brand state isStatus createdAt"
+          "carName brand state isStatus updatedAt"
         );
         const result = await CarModel.find(
           {
             state: getStateName(state),
           },
-          "carName brand state isStatus createdAt"
+          "carName brand state isStatus updatedAt"
         )
           .skip(skip)
           .limit(dataLimit)
@@ -686,14 +686,14 @@ const CarController = {
             state: getStateName(state),
             isStatus: isStatus,
           },
-          "carName brand state isStatus createdAt"
+          "carName brand state isStatus updatedAt"
         );
         const result = await CarModel.find(
           {
             state: getStateName(state),
             isStatus: isStatus,
           },
-          "carName brand state isStatus createdAt"
+          "carName brand state isStatus updatedAt"
         )
           .skip(skip)
           .limit(dataLimit)

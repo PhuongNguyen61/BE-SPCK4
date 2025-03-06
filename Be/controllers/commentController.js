@@ -202,6 +202,7 @@ const commentController = {
                 _id: commentId,
             }, {
                 isStatus: newStatus,
+                updatedAt: new Date(),
             });
             res.status(201).send({
                 message: 'Thay đổi trạng thái bình luận thành công!',
