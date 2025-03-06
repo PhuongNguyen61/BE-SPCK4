@@ -21,7 +21,7 @@ const MailController = {
   //Api gửi thư
   sendMail: async (req, res) => {
     try {
-      console.log("Request body:", req.body);
+      // console.log("Request body:", req.body);
       // Kiểm tra request body có dữ liệu không
       if (!req.body || Object.keys(req.body).length === 0) {
         throw new Error("Dữ liệu yêu cầu không hợp lệ.");
