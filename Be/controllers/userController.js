@@ -286,32 +286,6 @@ const UserController = {
       });
     }
   },
-  //Đăng ký làm provider
-  registerProvider: async (req, res) => {
-    try {
-      const { id } = req.params;
-      const findApplicationExist = await ApplicationModel.findOne({
-        userId: id,
-      });
-      if (findApplicationExist)
-        throw new Error("Bạn đã hỏi đăng ký làm người bán rồi");
-      const application = await ApplicationModel.create({
-        userId: id,
-      });
-      io.to("admin-room").emit("register-provider", {
-        message: `Có người đăng ký làm provider`,
-      });
-      res.status(200).send({
-        message: "Gửi thành công, chờ được phê duyệt",
-        data: application,
-      });
-    } catch (error) {
-      res.status(500).send({
-        message: error.message,
-        data: null,
-      });
-    }
-  },
 };
 
 export default UserController;

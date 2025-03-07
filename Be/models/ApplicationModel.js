@@ -6,6 +6,7 @@ const applicationSchema = new mongoose.Schema({
     ref: "users",
     required: true,
   },
+  createdAt: { type: Date, default: Date.now },
 });
 
 applicationSchema.index({ userId: 1, isStatus: 1 });

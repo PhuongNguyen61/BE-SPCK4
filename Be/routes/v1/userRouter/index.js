@@ -35,10 +35,5 @@ UserRouter.delete(
   UserController.deleteUserById
 ); // Xóa người dùng - ADMIN
 UserRouter.get("/:id", UserController.getUser); // Theo id
-UserRouter.post(
-  "/registerProvider/:id",
-  middlewares.verifyAccessToken,
-  middlewares.validateAdminOrAccountOwner,
-  UserController.registerProvider
-); // Đăng ký làm provider. Chờ admin duyệt
+
 export default UserRouter;
