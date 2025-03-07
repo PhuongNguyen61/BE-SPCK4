@@ -76,25 +76,25 @@ const MailController = {
   //Api lấy thư đã gửi của sender
   getSenderMail: async (req, res) => {
     try {
-      // const { limit, page } = req.query;
-      // const dataLimit = parseInt(limit) || 10;
-      // const pageNumber = parseInt(page) || 1;
-      // const skip = (pageNumber - 1) * dataLimit;
+      const { limit, page } = req.query;
+      const dataLimit = parseInt(limit) || 10;
+      const pageNumber = parseInt(page) || 1;
+      const skip = (pageNumber - 1) * dataLimit;
       const { userId } = req.query;
       const mails = await MailModel.find({ senderId: userId })
         .sort({ createdAt: -1 })
         .populate("recipientId  senderId")
-        .populate("carId", "carName");
-      // .skip(skip);
-      // .limit(dataLimit);
+        .populate("carId", "carName")
+        .skip(skip)
+        .limit(dataLimit);
       const totalMail = await MailModel.countDocuments({
         senderId: userId,
       });
       res.status(200).send({
         message: "Đây là tất cả thư bạn đã gửi",
         data: mails,
-        // totalPages: Math.ceil(totalMail / dataLimit),
-        // currentPage: pageNumber,
+        totalPages: Math.ceil(totalMail / dataLimit),
+        currentPage: pageNumber,
       });
     } catch (error) {
       res.status(500).send({
@@ -106,25 +106,25 @@ const MailController = {
   //Api lấy tất cả thư từ id người bán
   getProviderMail: async (req, res) => {
     try {
-      // const { limit, page } = req.query;
-      // const dataLimit = parseInt(limit) || 10;
-      // const pageNumber = parseInt(page) || 1;
-      // const skip = (pageNumber - 1) * dataLimit;
+      const { limit, page } = req.query;
+      const dataLimit = parseInt(limit) || 10;
+      const pageNumber = parseInt(page) || 1;
+      const skip = (pageNumber - 1) * dataLimit;
       const { providerId } = req.query;
       const mails = await MailModel.find({ recipientId: providerId })
         .sort({ createdAt: -1 })
         .populate("recipientId senderId")
-        .populate("carId", "carName");
-      // .skip(skip)
-      // .limit(dataLimit);
+        .populate("carId", "carName")
+        .skip(skip)
+        .limit(dataLimit);
       const totalMail = await MailModel.countDocuments({
         recipientId: providerId,
       });
       res.status(200).send({
         message: "Đây là tất cả thư của bạn",
         data: mails,
-        // totalPages: Math.ceil(totalMail / dataLimit),
-        // currentPage: pageNumber,
+        totalPages: Math.ceil(totalMail / dataLimit),
+        currentPage: pageNumber,
       });
     } catch (error) {
       res.status(500).send({
@@ -214,21 +214,21 @@ const MailController = {
       });
     }
   },
-  //Xóa thư "hết hạn" hoặc thư "từ chối"
+  //Xóa đơn đẫ gửi của sender
   deleteMail: async (req, res) => {
     try {
       const { id } = req.params;
       const mail = await MailModel.findById(id);
       if (!mail) return res.status(404).json({ message: "Thư không tồn tại!" });
 
-      // if (!["từ chối", "chấp thuận"].includes(mail.status)) {
-      //   return res.status(400).json({
-      //     message: "Không thể xóa thư khi chưa từ chối hoặc chấp thuận!",
-      //   });
-      // }
+      const idUser = req.user._id;
+      // console.log(idUser);
+      // console.log(mail.senderId.toString());
+      if (idUser !== mail.senderId.toString())
+        throw new Error("Bạn không phải người gửi đơn này!");
 
       await MailModel.findByIdAndDelete(id);
-      return res.json({ message: "Xóa thư thành công!", data: mail });
+      return res.json({ message: "Xóa đơn thành công!", data: mail });
     } catch (error) {
       console.error(error);
       return res.status(500).json({ message: "Lỗi server!" });
