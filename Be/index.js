@@ -38,6 +38,10 @@ app.get("", (req, res) => {
 
 app.use("/api", RootRouter);
 
-server.listen(process.env.PORT || 8080, () => {
-  console.log("This is Car Selling Project");
+// server.listen(process.env.PORT || 8080, () => {
+//   console.log("This is Car Selling Project");
+// });
+const PORT = process.env.PORT || 8080; //đặt biến port để render tự thêm vào
+server.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
