@@ -17,7 +17,7 @@ await mongoose.connect(process.env.MONGO_URL).then(() => {
 const app = express();
 app.use(express.json());
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: "https://fe-spck4.onrender.com",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
 };
 app.use(cors(corsOptions));
