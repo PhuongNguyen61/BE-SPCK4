@@ -16,6 +16,10 @@ await mongoose.connect(process.env.MONGO_URL).then(() => {
 
 const app = express();
 app.use(express.json());
+// const corsOptions = {
+//   origin: "http://localhost:5173",
+//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+// };
 const corsOptions = {
   origin: "https://fe-spck4.onrender.com",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
@@ -34,6 +38,10 @@ app.get("", (req, res) => {
 
 app.use("/api", RootRouter);
 
-server.listen(process.env.PORT || 8080, () => {
-  console.log("This is Car Selling Project");
+// server.listen(process.env.PORT || 8080, () => {
+//   console.log("This is Car Selling Project");
+// });
+const PORT = process.env.PORT || 8080; //đặt biến port để render tự thêm vào
+server.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
