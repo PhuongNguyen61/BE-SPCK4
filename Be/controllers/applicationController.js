@@ -86,7 +86,7 @@ const ApplicationController = {
             });
         }
     },
-    // Thay đổi trạng thái xe (Duyệt - Bỏ duyệt)
+    // Duyệt đơn
     approve: async (req, res) => {
         try {
             const { id } = req.params;
