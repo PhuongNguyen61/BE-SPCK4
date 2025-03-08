@@ -21,7 +21,7 @@ app.use(express.json());
 //   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
 // };
 const corsOptions = {
-  origin: "https://fe-spck4.onrender.com",
+  origin: ["https://fe-spck4.onrender.com", "http://localhost:5173"],
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
 };
 app.use(cors(corsOptions));
