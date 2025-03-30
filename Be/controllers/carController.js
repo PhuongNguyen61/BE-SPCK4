@@ -107,7 +107,7 @@ const CarController = {
       const pageNumber = parseInt(page) || 1;
       const skip = (pageNumber - 1) * dataLimit;
       // console.log("Min Price:", minPrice, "Max Price:", maxPrice);
-      const filters = {isStatus: 'approved'};
+      const filters = { isStatus: "approved" };
       if (brand) filters.brand = { $regex: brand, $options: "i" }; //áp các điều kiện vô filter - k phân biệt hoa thường
       if (state) filters.state = state;
       if (color) filters.color = color;
@@ -210,7 +210,7 @@ const CarController = {
   listUserCar: async (req, res) => {
     try {
       const { idProvider } = req.params;
-      const cars = await CarModel.find({ idProvider });
+      const cars = await CarModel.find({ idProvider, isStatus: "approved" });
       res.status(200).send({
         message: "Successful",
         data: cars,
@@ -322,7 +322,8 @@ const CarController = {
       const changeStatusCar = await CarModel.findByIdAndUpdate(
         {
           _id: id,
-        },{
+        },
+        {
           isStatus: newStatus,
           updatedAt: new Date(),
         }

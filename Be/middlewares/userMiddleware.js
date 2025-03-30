@@ -19,6 +19,8 @@ const UserMiddleware = {
       }
       if (!username) throw new Error("Username không được bỏ trống!");
       if (!password) throw new Error("Mật khẩu không được bỏ trống!");
+      if (password.length < 6)
+        throw new Error("Mật khẩu không được dưới 6 kí tự!");
       if (!confirmPassword)
         throw new Error("Mật khẩu xác nhận không được bỏ trống!");
       next();

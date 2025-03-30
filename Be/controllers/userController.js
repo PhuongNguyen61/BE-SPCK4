@@ -22,12 +22,6 @@ const UserController = {
   register: async (req, res) => {
     try {
       const { email, username, password, confirmPassword } = req.body;
-      // Validate
-      // if (!email || email.length < 6) {
-      //   return res
-      //     .status(400)
-      //     .send({ message: "Email must be at least 6 characters." });
-      // };
       // if (!password || password.length < 6) {
       //   return res
       //     .status(400)

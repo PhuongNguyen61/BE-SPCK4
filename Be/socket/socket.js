@@ -7,7 +7,8 @@ let io;
 
 const initSocket = (server) => {
   io = new Server(server, {
-    cors: { origin: "*" }, //chỉ cho domain này truy cập, muốn tất cả domain có thể truy cập dùng "*"
+    cors: { origin: "https://fe-spck4.onrender.com" }, //chỉ cho domain này truy cập, muốn tất cả domain có thể truy cập dùng "*"
+    //cors: { origin: "*" }, //chỉ cho domain này truy cập, muốn tất cả domain có thể truy cập dùng "*"
   });
 
   io.on("connection", (socket) => {
